@@ -9,8 +9,10 @@
   },
   "dependencies": {
     "pinia": "^2.0.28",
+    "tsparticles": "^2.8.0",
     "vue": "^3.2.45",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "vue3-particles": "^2.8.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
