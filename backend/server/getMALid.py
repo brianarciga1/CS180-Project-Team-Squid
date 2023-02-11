@@ -14,6 +14,6 @@ class getMALid():
             resualt.append(url_manager.search(url_manager.get_url()))
         
         for title in resualt:
-            self.ID.append(AnimeSearch(title[0][7:]).results[0].mal_id)
+            self.ID.append(AnimeSearch(title[0][7:]).results[1].mal_id)
             
         return self.ID

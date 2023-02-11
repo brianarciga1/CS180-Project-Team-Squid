@@ -17,18 +17,10 @@ app.config.from_object(__name__)
 # enable CORS
 CORS(app, resources={r'/*': {'origins': '*'}})
 
-url_manager = UrlManager()
-url_manager.add_new_url(url1)
-url_manager.add_new_url(url)
-url_manager.add_new_url(url2)
-resualts = []
-while url_manager.has_new_url() == True:
-    resualts.append(url_manager.search(url_manager.get_url()))
-
 # sanity check route
 @app.route('/ping', methods=['GET'])
 def ping_pong():
-    return json.dumps(resualts)
+    return 
 
 
 if __name__ == '__main__':

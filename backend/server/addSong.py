@@ -22,11 +22,11 @@ class addSong():
             ,'Content-Type': 'application/json',
         }
 
-        data = {
-            'name': 'MAPL',
-            'description': 'MAPL',
-            'public': False,
-        }
+        data = '{\n  "name": "MAPL",\n  "description": "MAPL",\n  "public": true\n}'
 
         response = requests.get('https://api.spotify.com/v1/me', headers=headers)
-        print(json.dump(response.text)['id'])
+        userID = (json.loads(response.text)['id'])
+        print(userID)
+        response = requests.post('https://api.spotify.com/v1/users/'+str(userID)+'/playlists', headers=headers, data=data)
+        print(response)
+        

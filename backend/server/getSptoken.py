@@ -6,7 +6,7 @@ os.environ["SPOTIPY_CLIENT_ID"] = "9710c9b2411949cf855b1a8da06d1c11"
 os.environ["SPOTIPY_CLIENT_SECRET"] = "ba49835923ae4147aec9069a91017efd"
 os.environ["SPOTIPY_REDIRECT_URI"] = "https://www.google.com/"
 
-scope = "user-library-read"
+scope = "user-library-read playlist-modify-public"
 
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
 results = sp.current_user_saved_tracks()
