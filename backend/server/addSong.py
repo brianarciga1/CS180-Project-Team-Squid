@@ -1,9 +1,10 @@
 import requests
 import json
+from getSptoken import get_sp_token
 
 class addSong():
     def __init__(self) -> None:
-        self.token_type = ""
+        self.token_type = "Bearer "
         self.access_token = ""
         self.userID = ""
         
@@ -14,17 +15,16 @@ class addSong():
         data = json.load(f)
 
         for i in data:
-            if i == 'token_type':
-                self.token_type = data[i]
             if i == 'access_token':
                 self.access_token = data[i] 
+        
                 
     # check if there is a list called 'MAPL', else create one
     # must run this function second, after open_token
     def create_list(self):
         headers = {
-            'Authorization': self.token_type + ' ' + self.access_token
-            ,'Content-Type': 'application/json'
+            'Authorization': self.token_type + self.access_token,
+            'Content-Type': 'application/json'
         }
 
         data = '{\n  "name": "MAPL",\n  "description": "MAPL",\n  "public": true\n}'
@@ -33,12 +33,13 @@ class addSong():
         self.userID = (json.loads(response.text)['id'])
         
         response = requests.get('https://api.spotify.com/v1/users/'+self.userID+'/playlists',headers=headers)
+        isCreated = False
         for listNames in json.loads(response.text)['items']:
             if listNames['name'] == 'MAPL':
-                j = True
+                isCreated = True
             else:
-                j = False
-        if j == False: 
+                isCreated = False
+        if isCreated == False: 
             response = requests.post('https://api.spotify.com/v1/users/'+self.userID+'/playlists', headers=headers, data=data)
         
     # search all the OPs and EDs

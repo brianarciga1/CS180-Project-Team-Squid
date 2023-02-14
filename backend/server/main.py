@@ -4,11 +4,11 @@ from getThemes import getThemes
 from getMALtoken import getMALtoken
 from getSptoken import get_sp_token
 
-#get_mal_token = getMALtoken()
-#get_mal_token.get_token()
+get_mal_token = getMALtoken()
+get_mal_token.get_token()
 
-#get_SP_token = get_sp_token()
-#get_SP_token.get_sp_token()
+get_SP_token = get_sp_token()
+get_SP_token.get_sp_token()
 
 themes = getThemes()
 themes.open_token()
