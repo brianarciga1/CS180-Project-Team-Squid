@@ -2,6 +2,7 @@
   <div class="about">
     <h1>hab keine angst</h1>
   </div>
+  
 </template>
 
 <style>
@@ -12,4 +13,6 @@
     align-items: center;
   }
 }
+
+
 </style>

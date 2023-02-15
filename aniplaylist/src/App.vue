@@ -9,18 +9,30 @@ import HelloWorld from './components/HelloWorld.vue'
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
-
+      
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
+        
       </nav>
     </div>
+    
   </header>
 
   <RouterView />
 </template>
 
+
+
+
+
 <style scoped>
+
+main {
+    background-image: url('./assets/images/star banner.gif');
+    background-size: cover;
+  }
+
 header {
   line-height: 1.5;
   max-height: 100vh;
@@ -81,5 +93,6 @@ nav a:first-of-type {
     padding: 1rem 0;
     margin-top: 1rem;
   }
+ 
 }
 </style>

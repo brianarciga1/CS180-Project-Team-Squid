@@ -25,6 +25,16 @@ a,
   body {
     display: flex;
     place-items: center;
+    background: black;
+    
+    /*
+    background-image: url('./assets/images/star banner.gif');
+    background-size: cover;
+    */
+    /*
+    height: 100vh;
+    */
+    
   }
 
   #app {
