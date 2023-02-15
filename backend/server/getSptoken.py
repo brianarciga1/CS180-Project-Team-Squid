@@ -1,10 +1,11 @@
 import spotipy
+from flask import session, request, redirect
 from spotipy.oauth2 import SpotifyOAuth
 import os
 
-os.environ["SPOTIPY_CLIENT_ID"] = "9710c9b2411949cf855b1a8da06d1c11"
-os.environ["SPOTIPY_CLIENT_SECRET"] = "ba49835923ae4147aec9069a91017efd"
-os.environ["SPOTIPY_REDIRECT_URI"] = "https://www.google.com/"
+os.environ["SPOTIPY_CLIENT_ID"] = "6b908b892b1c4f51aa4286c3d3c66cd0"
+os.environ["SPOTIPY_CLIENT_SECRET"] = "171f29c1ee1746828049c3feac06c06e"
+os.environ["SPOTIPY_REDIRECT_URI"] = "http://127.0.0.1:5173/"
 
 scope = "user-library-read playlist-modify-public"
 
@@ -14,8 +15,20 @@ class get_sp_token():
     # 1 remaining question: how can we get the code from the browser?
     # let the user copy and paste it?
     def get_sp_token(self):
-        sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
+        cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
+        auth_manager = spotipy.oauth2.SpotifyOAuth(scope=scope, cache_handler=cache_handler,show_dialog=True)
+
+        if request.args.get("code"):
+            auth_manager.get_access_token(request.args.get("code"))
+            return redirect('/sp_auth')
+
+        if not auth_manager.validate_token(cache_handler.get_cached_token()):
+            auth_url = auth_manager.get_authorize_url()
+            return f'<h2><a href="{auth_url}">Sign in</a></h2>'
+
+        sp = spotipy.Spotify(auth_manager=auth_manager)
         results = sp.current_user_saved_tracks()
         for idx, item in enumerate(results['items']):
             track = item['track']
             print(idx, track['artists'][0]['name'], " - ", track['name'])
+        return 'success'
