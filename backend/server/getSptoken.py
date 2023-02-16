@@ -5,7 +5,7 @@ import os
 
 os.environ["SPOTIPY_CLIENT_ID"] = "6b908b892b1c4f51aa4286c3d3c66cd0"
 os.environ["SPOTIPY_CLIENT_SECRET"] = "171f29c1ee1746828049c3feac06c06e"
-os.environ["SPOTIPY_REDIRECT_URI"] = "http://127.0.0.1:5173/"
+os.environ["SPOTIPY_REDIRECT_URI"] = "http://127.0.0.1:5173/auth"
 
 scope = "user-library-read playlist-modify-public"
 
@@ -20,15 +20,8 @@ class get_sp_token():
 
         if request.args.get("code"):
             auth_manager.get_access_token(request.args.get("code"))
-            return redirect('/sp_auth')
+            return 'access code made'
 
         if not auth_manager.validate_token(cache_handler.get_cached_token()):
             auth_url = auth_manager.get_authorize_url()
             return f'<h2><a href="{auth_url}">Sign in</a></h2>'
-
-        sp = spotipy.Spotify(auth_manager=auth_manager)
-        results = sp.current_user_saved_tracks()
-        for idx, item in enumerate(results['items']):
-            track = item['track']
-            print(idx, track['artists'][0]['name'], " - ", track['name'])
-        return 'success'

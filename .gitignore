@@ -1,1 +1,3 @@
 .vscode
+backend/server/.flask_session
+backend/server/env

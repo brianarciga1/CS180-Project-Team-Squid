@@ -17,14 +17,14 @@ app.config['SESSION_FILE_DIR'] = './.flask_session/'
 Session(app)
 
 # enable CORS
-CORS(app, resources={r'/*': {'origins': '*'}})
+CORS(app)
 
 # sanity check route
 @app.route('/ping', methods=['GET'])
 def ping_pong():
     return None
 
-@app.route('/sp_auth', methods=['GET'])
+@app.route('/api/sp_auth', methods=['GET'])
 def sp_auth():
     sp_token = get_sp_token()
     res = sp_token.get_sp_token()

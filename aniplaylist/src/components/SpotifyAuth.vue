@@ -16,7 +16,7 @@ export default {
   },
   methods: {
     sp_auth() {
-      const path = 'http://127.0.0.1:5000/sp_auth';
+      const path = 'http://127.0.0.1:5173/api/sp_auth';
       const queryString = window.location.search
       if(queryString == ''){
         axios.get(path)
