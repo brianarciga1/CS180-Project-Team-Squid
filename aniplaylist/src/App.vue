@@ -47,7 +47,7 @@ nav a.router-link-exact-active {
 
 /*This changes the color of the background of the current page you are on in the menu*/
 nav a.router-link-exact-active:hover {
-  background-color: transparent;
+  background-color: white;
 }
 
 /*Lets menu be side by side and changes border width and color*/
