@@ -1,6 +1,6 @@
 <!--THIS IS FOR THE HOME PAGE!!!!-->
 <template>
-  <div class="hello">
+  <div class="Home">
     Test output for home
   </div>
 </template>

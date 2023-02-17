@@ -1,15 +1,18 @@
 <template>
-  <div class="testPage">
+  <div class="makePlaylist">
     Test Page
   </div>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
+<script>
+export default {
+  name: 'makePlaylist',
+  props: {
+    msg: String
   }
 }
+</script>
+
+<style scoped>
+
 </style>

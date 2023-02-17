@@ -1,12 +1,12 @@
 <template>
-  <div class="about">
-    Test output for about
+  <div class="Search">
+    Test output for search
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Home',
+  name: 'Search',
   props: {
     msg: String
   }
