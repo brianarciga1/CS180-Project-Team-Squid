@@ -1,12 +1,12 @@
 <template>
-  <div class="Search">
-    Test output for search
+  <div class="makePlaylist">
+    Test Page
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Search',
+  name: 'makePlaylist',
   props: {
     msg: String
   }
