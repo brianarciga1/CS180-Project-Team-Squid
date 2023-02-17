@@ -20,9 +20,6 @@ Session(app)
 CORS(app)
 
 # sanity check route
-@app.route('/ping', methods=['GET'])
-def ping_pong():
-    return None
 
 @app.route('/api/sp_auth', methods=['GET'])
 def sp_auth():

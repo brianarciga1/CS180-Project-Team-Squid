@@ -1,6 +1,7 @@
 import requests
 import json
 import secrets
+import webbrowser
 
 client_id = 'cb1e847f2aa5d92fa7044e7a2fa3b848'
 CLIENT_SECRET = '9e9f3e0112ca5cc3e5376f6205196ffb250d736c4e1deb9d8968057f339ad392'
@@ -10,13 +11,13 @@ class getMALtoken():
     # 1. Generate a new Code Verifier / Code Challenge.
     def get_new_code_verifier(self) -> str:
         token = secrets.token_urlsafe(100)
-        return token[:128]
+        return token[:50]
 
     def print_new_authorisation_url(self,code_challenge: str):
         global client_id
-
+        
         url = f'https://myanimelist.net/v1/oauth2/authorize?response_type=code&client_id={client_id}&code_challenge={code_challenge}&state=RequestID42'
-        print(f'Authorise your application by clicking here: {url}\n')
+        webbrowser.open(url,new=2)
 
     # 3. Once you've authorised your application, you will be redirected to the webpage you've
     #    specified in the API panel. The URL will contain a parameter named "code" (the Authorisation
@@ -28,7 +29,7 @@ class getMALtoken():
         data = {
             'client_id': client_id,
             'client_secret': CLIENT_SECRET,
-            'code': authorisation_code,
+            'code': authorisation_code[29:853],
             'code_verifier': code_verifier,
             'grant_type': 'authorization_code'
         }
@@ -67,6 +68,6 @@ class getMALtoken():
     def get_token(self):
         code_verifier = code_challenge = self.get_new_code_verifier()
         self.print_new_authorisation_url(code_challenge)
-        authorisation_code = input('Copy-paste the Authorisation Code: ').strip()
+        authorisation_code = input('Copy Auth Code: ')
         token = self.generate_new_token(authorisation_code, code_verifier)
         self.print_user_info(token['access_token'])

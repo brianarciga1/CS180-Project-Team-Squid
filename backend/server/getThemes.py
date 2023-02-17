@@ -3,7 +3,7 @@ import json
 
 class getThemes():
     def __init__(self):
-        self.token_type = ""
+        self.token_type = "Bearer "
         self.access_token = ""
     
     # get the token from 'token.json', must run this first
@@ -12,8 +12,6 @@ class getThemes():
         data = json.load(f)
 
         for i in data:
-            if i == "token_type":
-                self.token_type = data[i] + " "
             if i == "access_token":
                 self.access_token = data[i]  
 
