@@ -30,5 +30,9 @@ def sp_auth():
     res = sp_token.get_sp_token()
     return res
 
+@app.route('api/mal_auth', methods=['GET'])
+def mal_auth():
+    pass
+
 if __name__ == '__main__':
     app.run()
