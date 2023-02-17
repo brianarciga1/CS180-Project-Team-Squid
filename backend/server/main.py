@@ -12,8 +12,10 @@ get_SP_token.get_sp_token()
 
 themes = getThemes()
 themes.open_token()
+opseds = themes.get_themes()
+print(opseds)
 
 add_song=addSong()
 add_song.open_token()
 add_song.create_list()
-add_song.add_Song(add_song.search(themes.get_themes()))
+add_song.add_Song(add_song.search(opseds))
