@@ -1,11 +1,25 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import HelloWorld from './components/HelloWorld.vue'
+
 </script>
 
 <template>
-  <div id="app">
-    <router-view/>
-  </div>
+  <header>
+    <img alt="MAPL logo" class="logo" src="@/assets/images/favicon.png" width="125" height="125" />
+
+    <div class="wrapper">
+      <HelloWorld/>
+
+      <nav>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/authenticate">Authenticate</RouterLink>
+        <RouterLink to="/options">Options</RouterLink>
+      </nav>
+    </div>
+  </header>
+
+  <RouterView />
 </template>
 
 <style scoped>
@@ -26,22 +40,25 @@ nav {
   margin-top: 2rem;
 }
 
+/*Changes color of text of current page*/
 nav a.router-link-exact-active {
-  color: white;
+  color: orange;
 }
 
+/*This changes the color of the background of the current page you are on in the menu*/
 nav a.router-link-exact-active:hover {
   background-color: white;
 }
 
+/*Lets menu be side by side and changes border width and color*/
 nav a {
   display: inline-block;
   padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
+  border-left: 1px solid white;
 }
 
 nav a:first-of-type {
-  border: 0;
+  border: 1;
 }
 
 @media (min-width: 1024px) {
@@ -51,23 +68,33 @@ nav a:first-of-type {
     padding-right: calc(var(--section-gap) / 2);
   }
 
+  /*Space between logo and Title and menu*/
   .logo {
     margin: 0 2rem 0 0;
   }
 
+  /*wrap menu around text*/
   header .wrapper {
     display: flex;
     place-items: flex-start;
     flex-wrap: wrap;
   }
 
+  /*Aligns menu with title and logo*/
   nav {
     text-align: left;
     margin-left: -1rem;
     font-size: 1rem;
 
-    padding: 1rem 0;
-    margin-top: 1rem;
+    padding: -0rem 0;
+    margin-top: 0rem;
   }
 }
+
+#app {
+  font-family: Arial, Helvetica, sans-serif;
+
+  
+}
+
 </style>
