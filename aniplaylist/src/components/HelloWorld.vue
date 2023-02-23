@@ -11,7 +11,7 @@ defineProps({
   <div class="greetings">
     <h1 class="green">{{ msg }}</h1>
     <h3>
-      <img alt="MAPL logo" class="logo" src="@/assets/images/MAPL.png" width="300" height="125"/>
+      <img alt="MAPL logo" class="logo" src="@/assets/images/anime_banner.gif" width="1280" height="250"/>
     </h3>
   </div>
 </template>

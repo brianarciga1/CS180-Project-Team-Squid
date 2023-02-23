@@ -6,11 +6,8 @@ import HelloWorld from './components/HelloWorld.vue'
 
 <template>
   <header>
-    <img alt="MAPL logo" class="logo" src="@/assets/images/favicon.png" width="125" height="125" />
-
     <div class="wrapper">
       <HelloWorld/>
-
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/authenticate">Authenticate</RouterLink>
