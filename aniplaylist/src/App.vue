@@ -13,6 +13,9 @@ import HelloWorld from './components/HelloWorld.vue'
         <RouterLink to="/authenticate">Authenticate</RouterLink>
         <RouterLink to="/options">Options</RouterLink>
       </nav>
+      <nav>
+        <RouterLink to="/options">Start Here</RouterLink>
+      </nav>
     </div>
   </header>
 

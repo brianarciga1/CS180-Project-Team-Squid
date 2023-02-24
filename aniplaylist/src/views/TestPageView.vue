@@ -1,6 +1,6 @@
 <template>
   <div class="makePlaylist">
-    Test Page
+    Bamboozled
   </div>
 </template>
 
