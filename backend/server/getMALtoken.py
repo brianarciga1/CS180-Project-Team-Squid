@@ -1,6 +1,7 @@
 import requests
 import json
 import secrets
+from flask import session, request
 
 client_id = 'cb1e847f2aa5d92fa7044e7a2fa3b848'
 CLIENT_SECRET = '9e9f3e0112ca5cc3e5376f6205196ffb250d736c4e1deb9d8968057f339ad392'
@@ -16,7 +17,7 @@ class getMALtoken():
         global client_id
 
         url = f'https://myanimelist.net/v1/oauth2/authorize?response_type=code&client_id={client_id}&code_challenge={code_challenge}&state=RequestID42'
-        print(f'Authorise your application by clicking here: {url}\n')
+        return url
 
     # 3. Once you've authorised your application, you will be redirected to the webpage you've
     #    specified in the API panel. The URL will contain a parameter named "code" (the Authorisation
@@ -65,8 +66,13 @@ class getMALtoken():
     # 1 remaining question: how can we get the code from the browser?
     # let the user copy and paste it?
     def get_token(self):
+
+        if request.args.get("code"):
+            authorisation_code = request.args.get("code")
+            token = self.generate_new_token(authorisation_code, code_verifier)
+            session['mal_token'] = token
+            return 'mal code made'
+        
         code_verifier = code_challenge = self.get_new_code_verifier()
-        self.print_new_authorisation_url(code_challenge)
-        authorisation_code = input('Copy-paste the Authorisation Code: ').strip()
-        token = self.generate_new_token(authorisation_code, code_verifier)
-        self.print_user_info(token['access_token'])
+        url = self.print_new_authorisation_url(code_challenge)
+        return f'<h2><a href="{url}">Sign in</a></h2>'
