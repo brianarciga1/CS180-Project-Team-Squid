@@ -24,7 +24,7 @@ CORS(app)
 @app.route('/api/sp_auth', methods=['GET'])
 def sp_auth():
     if session.get("token_info",'no token') != 'no token':
-        return session.get('token_info')
+        return 'auth complete'
     sp_token = get_sp_token()
     res = sp_token.get_sp_token()
     return res

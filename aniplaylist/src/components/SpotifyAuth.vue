@@ -11,7 +11,7 @@ export default {
   data() {
     return {
       msg: '',
-      success: '',
+      complete: false,
     };
   },
   methods: {
@@ -22,6 +22,9 @@ export default {
         axios.get(path)
         .then((res) => {
           this.msg = res.data;
+          if(this.msg == 'auth complete'){
+            this.emitToParent()
+          }
         })
         .catch((error) => {
           // eslint-disable-next-line
@@ -31,17 +34,17 @@ export default {
       else{
         axios.get(path+queryString)
         .then((res) => {
-          this.success = res.data;
-          console.log(this.success)
+          this.emitToParent()
         })
         .catch((error) => {
           // eslint-disable-next-line
           console.error(error);
         });
       }
-      
     },
-
+    emitToParent(){
+      this.$emit('spotAuth')
+    }
   },
   mounted() {
     this.sp_auth();

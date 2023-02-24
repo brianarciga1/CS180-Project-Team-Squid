@@ -1,5 +1,5 @@
 <template>
-  <SpotifyAuth />
+  <SpotifyAuth @spot-auth="spot"/>
 </template>
 
 <script>
@@ -8,10 +8,31 @@ import SpotifyAuth from '../components/SpotifyAuth.vue';
 
 export default {
     name: "Search",
+    data(){
+      return {
+        spotSuccess: false,
+        MALSuccess: false
+      }
+    },
     props: {
         msg: String
     },
-    components: { SpotifyAuth, MALAuth }
+    components: { SpotifyAuth, MALAuth },
+    methods: {
+      spot(){
+        this.spotSuccess = true;
+        this.checkAuth()
+      },
+      checkAuth(){
+        if(this.spotSuccess == true){
+          this.$router.push('/options');
+        }
+      }
+      
+    },
+    beforeUpdate(){
+      this.checkAuth();
+    }
 }
 </script>
 
