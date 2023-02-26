@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import MALAuth from '../components/MALAuth.vue';
 import SpotifyAuth from '../components/SpotifyAuth.vue';
 
 export default {
@@ -11,13 +10,9 @@ export default {
     data(){
       return {
         spotSuccess: false,
-        MALSuccess: false
       }
     },
-    props: {
-        msg: String
-    },
-    components: { SpotifyAuth, MALAuth },
+    components: { SpotifyAuth},
     methods: {
       spot(){
         this.spotSuccess = true;
@@ -25,7 +20,7 @@ export default {
       },
       checkAuth(){
         if(this.spotSuccess == true){
-          this.$router.push('/options');
+          this.$router.push('/malauth');
         }
       }
       
@@ -35,7 +30,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>
