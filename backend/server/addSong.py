@@ -6,7 +6,7 @@ from spotipy.oauth2 import SpotifyOAuth
 
 class addSong():
     def __init__(self) -> None:
-        self.token_type = ""
+        self.token_type = "Bearer "
         self.access_token = ""
         self.userID = ""
         self.playlistID = ''
@@ -17,16 +17,14 @@ class addSong():
         data = session['token_info']
 
         for i in data:
-            if i == 'token_type':
-                self.token_type = data[i]
             if i == 'access_token':
                 self.access_token = data[i] 
                 
     # must run this function second, after open_token
     def create_list(self, name, description):
         headers = {
-            'Authorization': self.token_type + ' ' + self.access_token
-            ,'Content-Type': 'application/json'
+            'Authorization': self.token_type + self.access_token,
+            'Content-Type': 'application/json'
         }
 
         data = '{\n  "name": "' + name + '",\n  "description": "' + description + '",\n  "public": true\n}'

@@ -11,11 +11,11 @@ class getMALtoken():
     # 1. Generate a new Code Verifier / Code Challenge.
     def get_new_code_verifier(self) -> str:
         token = secrets.token_urlsafe(100)
-        return token[:128]
+        return token[:50]
 
     def print_new_authorisation_url(self,code_challenge: str):
         global client_id
-
+        
         url = f'https://myanimelist.net/v1/oauth2/authorize?response_type=code&client_id={client_id}&code_challenge={code_challenge}&state=RequestID42'
         return url
 
@@ -29,7 +29,7 @@ class getMALtoken():
         data = {
             'client_id': client_id,
             'client_secret': CLIENT_SECRET,
-            'code': authorisation_code,
+            'code': authorisation_code[29:853],
             'code_verifier': code_verifier,
             'grant_type': 'authorization_code'
         }
