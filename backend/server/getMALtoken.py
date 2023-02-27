@@ -39,11 +39,6 @@ class getMALtoken():
 
         token = response.json()
         response.close()
-        print('Token generated successfully!')
-
-        with open('token.json', 'w') as file:
-            json.dump(token, file, indent = 4)
-            print('Token saved in "token.json"')
 
         return token
 
@@ -72,7 +67,7 @@ class getMALtoken():
             authorisation_code = request.args.get("code")
             token = self.generate_new_token(authorisation_code, code_verifier)
             session['mal_token'] = token
-            return 'mal code made'
+            return 'auth complete'
         
         code_verifier = code_challenge = self.get_new_code_verifier()
         session['code_verifier'] = code_verifier

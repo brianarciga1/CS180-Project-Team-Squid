@@ -1,5 +1,5 @@
 <template>
-    <MALAuth />
+    <MALAuth @mal-auth="mal"/>
 </template>
   
 <script>
@@ -14,8 +14,8 @@ export default {
     },
     components: { MALAuth },
     methods: {
-    spot(){
-        this.spotSuccess = true;
+    mal(){
+        this.MALSuccess = true;
         this.checkAuth()
     },
     checkAuth(){

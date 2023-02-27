@@ -1,8 +1,10 @@
-from flask import Flask, jsonify, session
+from flask import Flask, jsonify, session,request
 from flask_session import Session
 from flask_cors import CORS
 from getSptoken import get_sp_token
 from getMALtoken import getMALtoken
+from getThemes import getThemes
+from addSong import addSong
 import json
 import os
 
@@ -31,13 +33,22 @@ def sp_auth():
 
 @app.route('/api/mal_auth', methods=['GET'])
 def mal_auth():
+    if session.get("mal_token",'no token') != 'no token':
+        return 'auth complete'
     mal_token = getMALtoken()
     res = mal_token.get_token()
     return res
 
-@app.route('/api/check')
-def check():
-    return session["token_info"]
+@app.route('/api/submission', methods=['POST'])
+def submission():
+    themes = getThemes()
+    themes.open_token()
+    form = request.json
+    add_song=addSong()
+    add_song.open_token()
+    add_song.create_list(form['playlistTitle'], form['playlistDesc'])
+    add_song.add_Song(add_song.search(themes.get_themes(form)))
+    return 'success'
 
 if __name__ == '__main__':
     app.run()

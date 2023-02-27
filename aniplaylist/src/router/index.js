@@ -15,12 +15,17 @@ const router = createRouter({
     {
       path: '/options',
       name: 'options',
-      component: () => import('../views/TestPageView.vue')
+      component: () => import('../views/Options.vue')
     },
     {
       path: '/malauth',
       name: 'malauth',
       component: () => import('../views/MalAuthPage.vue')
+    },
+    {
+      path: '/',
+      name: 'home',
+      component: () => import('../views/HomeView.vue')
     }
   ]
 })
