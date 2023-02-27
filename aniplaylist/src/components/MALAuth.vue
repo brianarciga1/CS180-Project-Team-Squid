@@ -7,16 +7,16 @@ import axios from 'axios';
 
 
 export default {
-  name: 'SpotifyAuth',
+  name: 'MALAuth',
   data() {
     return {
       msg: '',
-      complete: false,
+      success: '',
     };
   },
   methods: {
-    sp_auth() {
-      const path = 'http://127.0.0.1:5173/api/sp_auth';
+    mal_auth() {
+      const path = 'http://127.0.0.1:5173/api/mal_auth';
       const queryString = window.location.search
       if(queryString == ''){
         axios.get(path)
@@ -41,13 +41,15 @@ export default {
           console.error(error);
         });
       }
+      
     },
     emitToParent(){
-      this.$emit('spotAuth')
+      this.$emit('malAuth')
     }
+
   },
   mounted() {
-    this.sp_auth();
+    this.mal_auth();
   },
 };
 </script>

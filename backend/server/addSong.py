@@ -1,46 +1,39 @@
+import spotipy
+from flask import session
 import requests
 import json
-from getSptoken import get_sp_token
+from spotipy.oauth2 import SpotifyOAuth
 
 class addSong():
     def __init__(self) -> None:
         self.token_type = "Bearer "
         self.access_token = ""
         self.userID = ""
+        self.playlistID = ''
         
     # get the token from '.cache'
     # must run this function first
     def open_token(self):
-        f = open('.cache')
-        data = json.load(f)
+        data = session['token_info']
 
         for i in data:
             if i == 'access_token':
                 self.access_token = data[i] 
-        
                 
-    # check if there is a list called 'MAPL', else create one
     # must run this function second, after open_token
-    def create_list(self):
+    def create_list(self, name, description):
         headers = {
             'Authorization': self.token_type + self.access_token,
             'Content-Type': 'application/json'
         }
 
-        data = '{\n  "name": "MAPL",\n  "description": "MAPL",\n  "public": true\n}'
+        data = '{\n  "name": "' + name + '",\n  "description": "' + description + '",\n  "public": true\n}'
 
         response = requests.get('https://api.spotify.com/v1/me', headers=headers)
         self.userID = (json.loads(response.text)['id'])
         
-        response = requests.get('https://api.spotify.com/v1/users/'+self.userID+'/playlists',headers=headers)
-        isCreated = False
-        for listNames in json.loads(response.text)['items']:
-            if listNames['name'] == 'MAPL':
-                isCreated = True
-            else:
-                isCreated = False
-        if isCreated == False: 
-            response = requests.post('https://api.spotify.com/v1/users/'+self.userID+'/playlists', headers=headers, data=data)
+        response = requests.post('https://api.spotify.com/v1/users/'+self.userID+'/playlists', headers=headers, data=data)
+        self.playlistID = (json.loads(response.text)['id'])
         
     # search all the OPs and EDs
     # results is the superlist, each element is a list of animes
@@ -71,11 +64,7 @@ class addSong():
             'Authorization': self.token_type + ' ' + self.access_token
             ,'Content-Type': 'application/json'
         }
-        response = requests.get('https://api.spotify.com/v1/users/'+self.userID+'/playlists',headers=headers)
-        for playlist in json.loads(response.text)['items']:
-            if playlist['name'] == 'MAPL':
-                playlistID = playlist['id']
         for anime in lists:
             for song in anime:
                 data = '{\n  "uris": [\n    "'+song[1]+'"\n  ],\n  "position": 0\n}'
-                response = requests.post('https://api.spotify.com/v1/playlists/'+playlistID+'/tracks', headers=headers, data=data)
+                response = requests.post('https://api.spotify.com/v1/playlists/'+self.playlistID+'/tracks', headers=headers, data=data)
