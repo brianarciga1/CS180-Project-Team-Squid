@@ -29,7 +29,7 @@ class getMALtoken():
         data = {
             'client_id': client_id,
             'client_secret': CLIENT_SECRET,
-            'code': authorisation_code[29:853],
+            'code': authorisation_code,
             'code_verifier': code_verifier,
             'grant_type': 'authorization_code'
         }
