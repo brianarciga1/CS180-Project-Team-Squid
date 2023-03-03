@@ -6,7 +6,7 @@ import HelloWorld from './components/HelloWorld.vue'
 
 <template>
   <header>
-    <img alt="MAPL logo" class="logo" src="@/assets/images/favicon.png" width="125" height="125" />
+    
 
     <div class="wrapper">
       <HelloWorld/>
@@ -43,11 +43,13 @@ nav {
 /*Changes color of text of current page*/
 nav a.router-link-exact-active {
   color: orange;
+  border: 10px solid orange;
 }
 
 /*This changes the color of the background of the current page you are on in the menu*/
 nav a.router-link-exact-active:hover {
-  background-color: white;
+  background-color: purple;
+  border: 10px solid purple;
 }
 
 /*Lets menu be side by side and changes border width and color*/
@@ -82,7 +84,7 @@ nav a:first-of-type {
 
   /*Aligns menu with title and logo*/
   nav {
-    text-align: left;
+    text-align: center;
     margin-left: -1rem;
     font-size: 1rem;
 
