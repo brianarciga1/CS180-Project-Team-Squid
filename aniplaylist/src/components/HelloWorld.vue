@@ -10,9 +10,9 @@ defineProps({
 <template>
   <div class="greetings">
     <h1 class="green">{{ msg }}</h1>
-    <h3>
+    <div class="logo_wrapper">
       <img alt="MAPL logo" class="logo" src="@/assets/images/anime_banner.gif" contain width="1280" height="250"/>
-    </h3>
+    </div>
   </div>
 </template>
 
@@ -21,6 +21,14 @@ h1 {
   font-weight: 500;
   font-size: 2.6rem;
   top: -10px;
+}
+
+.logo_wrapper{
+  width: 100vw;
+}
+
+.logo{
+  width: 100%;
 }
 
 h3 {
