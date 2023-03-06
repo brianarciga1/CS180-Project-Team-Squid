@@ -34,6 +34,7 @@ class addSong():
         
         response = requests.post('https://api.spotify.com/v1/users/'+self.userID+'/playlists', headers=headers, data=data)
         self.playlistID = (json.loads(response.text)['id'])
+        return self.playlistID
         
     # search all the OPs and EDs
     # results is the superlist, each element is a list of animes
