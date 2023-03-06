@@ -1,4 +1,6 @@
 from flask import session, request
+from bs4 import BeautifulSoup
+import time
 import requests
 import json
 
@@ -19,17 +21,19 @@ class getThemes():
     # animeThemes is a list of animes(list): 0 = anime0, 1 = anime1...
     # inside the sublist(animes0), it contains all the OPs and EDs
     # OP and ED string: name 'by' author
-    def get_themes(self,form):
+    def get_themes(self,form,add_Song):
         header={'Content-Type': 'application/x-www-form-urlencoded',
         'Authorization': self.token_type + self.access_token,
         'User Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'}
         animeIDs = []
         path1 = 'https://api.myanimelist.net/v2/users/@me/animelist'
         status = '?status='
+        #limit = '&limit=1000'
         if len(form['listOptions']) < 5:
             for i in range(len(form['listOptions'])):
                 newstatus = status + form['listOptions'][i] 
                 newpath = path1 + newstatus
+                #r = requests.get(newpath + limit, headers=header)
                 r = requests.get(newpath, headers=header)
                 for i in json.loads(r.text)['data']:
                     animeIDs.append(i['node']['id'])
@@ -38,36 +42,43 @@ class getThemes():
             for i in json.loads(r.text)['data']:
                 animeIDs.append(i['node']['id'])
         
-        animeOPED=[]
+        songID=[]
         animeThemes=[]
         fields = '?fields='
+        check_op = False
+        check_ed = False
         for i in range(len(form['songTypes'])):
-            if i != 0:
-                fields += ','
             if form['songTypes'][i] == 'op':
-                fields += 'opening_themes'
+                check_op = True
             if form['songTypes'][i] =='ed':
-                fields += 'ending_themes'
+                check_ed = True
         for i in animeIDs:
-            response =requests.get("https://api.myanimelist.net/v2/anime/"+str(i)+"?fields=opening_themes,ending_themes", headers=header)
-            rJSON = json.loads(response.text)
-            if rJSON['opening_themes']:
-                for i in rJSON['opening_themes']:
-                    if i['text'][0] =='#':
-                        animeOPED.append(i['text'][4:])
+            site = requests.get('https://myanimelist.net/anime/' + str(i))
+            soup = BeautifulSoup(site.text, 'lxml')
+            ops_div = soup.find('div', class_ = 'theme-songs js-theme-songs opnening')
+            eds_div = soup.find('div', class_ = 'theme-songs js-theme-songs ending')
+            songs = []
+            if check_op:
+                songs += ops_div.findAll('input')
+            if check_ed:
+                songs += eds_div.findAll('input')
+            for song in songs:
+                if 'spotify' in song['id'] and song['value'] != '':
+                    songID.append('spotify:track:' + song['value'][31:])
+                elif 'spotify' in song['id']:
+                    song_parent = song.parent
+                    song_artist = song_parent.find('span', class_ = 'theme-song-artist')
+                    if len(song_parent.contents[0].string) > 2:
+                        songTitle = song_parent.contents[0].string
                     else:
-                        animeOPED.append(i['text'])
-            else:
-                animeOPED.append('No Opening')
-            if rJSON['ending_themes']:
-                for i in rJSON['ending_themes']:
-                    if i['text'][0] =='#':
-                        animeOPED.append(i['text'][4:])
-                    else:
-                        animeOPED.append(i['text'])
-            else:
-                animeOPED.append('No Ending')
-            animeThemes.append(animeOPED)
-            animeOPED = []
+                        songTitle = song_parent.contents[1][1:]
+                    if song_artist is None:
+                        continue
+                    song_artist = song_artist.string
+                    animeThemes.append(songTitle + song_artist)
+            time.sleep(.5)
+
+        add_Song.add_to_list(songID)
+            
             
         return animeThemes

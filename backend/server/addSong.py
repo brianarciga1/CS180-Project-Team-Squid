@@ -35,6 +35,18 @@ class addSong():
         response = requests.post('https://api.spotify.com/v1/users/'+self.userID+'/playlists', headers=headers, data=data)
         self.playlistID = (json.loads(response.text)['id'])
         return self.playlistID
+
+    def add_to_list(self, lists):
+        headers = {
+            'Authorization': self.token_type + self.access_token,
+            'Content-Type': 'application/json'
+        }
+
+        my_uri = {"uris" : lists[0:99]}
+        data = json.dumps(my_uri)
+        response = requests.post('https://api.spotify.com/v1/playlists/' + self.playlistID +'/tracks', headers=headers, data=data)
+        print('good')
+        
         
     # search all the OPs and EDs
     # results is the superlist, each element is a list of animes
@@ -48,14 +60,11 @@ class addSong():
         results = []
 
         for i in lists:
-            resultofAnime = []
-            for j in i:
-                nameAnduri = []
-                r = requests.get('https://api.spotify.com/v1/search?q='+j+'&type=track', headers=headers)
-                nameAnduri.append(json.loads(r.text)['tracks']['items'][0]['name'])
-                nameAnduri.append(json.loads(r.text)['tracks']['items'][0]['uri'])
-                resultofAnime.append(nameAnduri)
-            results.append(resultofAnime)
+            nameAnduri = []
+            r = requests.get('https://api.spotify.com/v1/search?q='+i+'&type=track', headers=headers)
+            nameAnduri.append(json.loads(r.text)['tracks']['items'][0]['name'])
+            nameAnduri.append(json.loads(r.text)['tracks']['items'][0]['uri'])
+            results.append(nameAnduri)
         
         return results
     
@@ -66,6 +75,5 @@ class addSong():
             ,'Content-Type': 'application/json'
         }
         for anime in lists:
-            for song in anime:
-                data = '{\n  "uris": [\n    "'+song[1]+'"\n  ],\n  "position": 0\n}'
-                response = requests.post('https://api.spotify.com/v1/playlists/'+self.playlistID+'/tracks', headers=headers, data=data)
+            data = '{\n  "uris": [\n    "'+anime[1]+'"\n  ],\n  "position": 0\n}'
+            response = requests.post('https://api.spotify.com/v1/playlists/'+self.playlistID+'/tracks', headers=headers, data=data)
