@@ -1,5 +1,6 @@
 <template>
     <MALAuth @mal-auth="mal"/>
+    <img src="@/assets/images/Chopper.png" alt="centered image" style="max-width: 20%; float: right;">
 </template>
   
 <script>
