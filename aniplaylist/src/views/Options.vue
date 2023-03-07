@@ -1,37 +1,43 @@
 <template>
   <div class="form">
     <form @submit.prevent="submitForm">
-      <p class="prompt">Title of Playlist:</p>
+      <p class="font1">Title___of___Playlist:</p>
       <input type="text" class="userInput" v-model="form.playlistTitle">
-      <p v-if="titleCheck">Please enter a valid title for playlist</p>
-      <p class="prompt">Enter Description:</p>
+      <p v-if="titleCheck" class="red-text">Please enter a valid title for playlist</p>
+      <div class="spacer"></div>
+      <p class="font1">Enter___Description:</p>
       <textarea name="description" cols="30" rows="5" v-model="form.playlistDesc"></textarea>
-      <p v-if="descCheck">Please enter a valid title for description</p>
+      <p v-if="descCheck" class="red-text">Please enter a valid title for description</p>
       <div class="listoptions">
-        <p class="prompt">Choose catagories of anime:</p>
+        <div class="spacer"></div>
+        <p class="font1">Choose___categories___of___anime:</p>
         <ul>
           <li v-for="(item,index) in listOptionstr" :key="index">
             <input type="checkbox" v-model="form.listOptions" :id="item.value" :value="item.value">
-            <label for="{{ item.value }}">{{ item.label }}</label>
+            <label for="{{ item.value }}" class="font4">{{ item.label }}</label>
           </li>
           <li>
           <input type="checkbox" id="all" v-model="listAll" @change="checkAll">
-          <label for="all">All</label>
+          <label for="all" class="font4"> All</label>
           </li>
         </ul>
       </div>
-      <p v-if="listCheck">Please select at least one option</p>
+      <p v-if="listCheck" class="red-text">Please select at least one option</p>
       <div class="listoptions">
-        <p class="prompt">Choose types of songs:</p>
+        <div class="spacer"></div>
+        <p class="font1">Choose___types___of___songs:</p>
         <ul>
           <li v-for="item in songTypeStr">
             <input type="checkbox" v-model="form.songTypes" :id="item.value" :value="item.value">
-            <label>{{ item.label }}</label>
+            <label class="font4">{{ item.label }}</label>
           </li>
         </ul>
       </div>
-      <p v-if="songCheck">Please select at least one option</p>
+      <p v-if="songCheck" class="red-text">Please select at least one option</p>
+      <div class="spacer"></div>
       <button type="submit">Submit</button>
+      <div class="spacer"></div>
+      <img src="@/assets/images/Chopper.png" alt="centered image" style="max-width: 20%; float: right;">
     </form>
   </div>
 </template>
@@ -58,15 +64,15 @@ export default {
       songCheck: false,
       listAll: false,
       listOptionstr: [
-      {label: 'Watching',value: 'watching'},
-      {label: 'Completed',value: 'completed'},
-      {label: 'On Hold', value: 'on_hold'},
-      {label: 'Dropped', value: 'dropped'},
-      {label: 'Plan To Watch', value: 'plan_to_watch'}
+      {label: ' Watching',value: 'watching'},
+      {label: ' Completed',value: 'completed'},
+      {label: ' On Hold', value: 'on_hold'},
+      {label: ' Dropped', value: 'dropped'},
+      {label: ' Plan To Watch', value: 'plan_to_watch'}
       ],
       songTypeStr: [
-        {label: 'Openings', value: 'op'},
-        {label: 'Endings', value: 'ed'}
+        {label: ' Openings', value: 'op'},
+        {label: ' Endings', value: 'ed'}
       ]
     }
   },
@@ -132,5 +138,45 @@ export default {
 </script>
 
 <style scoped>
+.center {
+  display: flex;
+  justify-content: right;
+  align-items: right;
+  height: 20vh;
+  margin-bottom: 100px;
+  background-color: black;
+}
+.font1 {
+  font-family: "Naruto", sans-serif;
+  font-size: 30px;
+  text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+  
+  background-color: rgba(159, 0, 135, 0.452);
+}
 
+.font4 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+.spacer {
+  height: 50px; /* adjust as needed */
+}
+
+.red-text {
+  color: red;
+  font-weight: bold;
+}
+input[type="checkbox"] {
+  height: 20px;
+  width: 20px;
+}
+button[type="submit"] {
+  font-family: "Naruto", sans-serif;
+  font-size: 20px;
+  padding: 10px 20px;
+  background-color: rgb(255, 187, 0) !important;
+}
 </style>
