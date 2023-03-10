@@ -43,7 +43,7 @@ class getMALtoken():
         return token
 
 
-    # 4. Test the API by requesting your profile information
+    # 4. Test the API by requesting your profile information ***
     def print_user_info(self,access_token: str):
         url = 'https://api.myanimelist.net/v2/users/@me'
         response = requests.get(url, headers = {
