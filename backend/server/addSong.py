@@ -28,8 +28,9 @@ class addSong():
         }
 
         data = '{\n  "name": "' + name + '",\n  "description": "' + description + '",\n  "public": true\n}'
-
+        print(headers)
         response = requests.get('https://api.spotify.com/v1/me', headers=headers)
+        print(json.dumps(response.status_code))
         self.userID = (json.loads(response.text)['id'])
         
         response = requests.post('https://api.spotify.com/v1/users/'+self.userID+'/playlists', headers=headers, data=data)
