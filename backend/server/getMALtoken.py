@@ -19,9 +19,6 @@ class getMALtoken():
         url = f'https://myanimelist.net/v1/oauth2/authorize?response_type=code&client_id={client_id}&code_challenge={code_challenge}&state=RequestID42'
         return url
 
-    # 3. Once you've authorised your application, you will be redirected to the webpage you've
-    #    specified in the API panel. The URL will contain a parameter named "code" (the Authorisation
-    #    Code). You need to feed that code to the application.
     def generate_new_token(self,authorisation_code: str, code_verifier: str) -> dict:
         global client_id, CLIENT_SECRET
 
@@ -42,24 +39,6 @@ class getMALtoken():
 
         return token
 
-
-    # 4. Test the API by requesting your profile information ***
-    def print_user_info(self,access_token: str):
-        url = 'https://api.myanimelist.net/v2/users/@me'
-        response = requests.get(url, headers = {
-            'Authorization': f'Bearer {access_token}'
-            })
-        
-        response.raise_for_status()
-        user = response.json()
-        response.close()
-
-        print(f"\n>>> Greetings {user['name']}! <<<")
-    
-    # We only need to run this function to get the token, remember to delete 'token.json' before running this funcion
-    # only the string after 'code=' and before '&status'
-    # 1 remaining question: how can we get the code from the browser?
-    # let the user copy and paste it?
     def get_token(self):
 
         if request.args.get("code"):
