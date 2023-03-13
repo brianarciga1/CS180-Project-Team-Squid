@@ -4,3 +4,4 @@ flask_session
 spotipy
 bs4
 rq
+lxml

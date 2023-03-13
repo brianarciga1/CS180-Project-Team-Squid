@@ -16,7 +16,7 @@ DEBUG = True
 
 # instantiate the app
 app = Flask(__name__)
-r = redis.Redis()
+r = redis.Redis(host='redis', port=6379)
 q = Queue(connection=r)
 app.config.from_object(__name__)
 app.config['SECRET_KEY'] = os.urandom(64)
@@ -28,7 +28,7 @@ Session(app)
 CORS(app)
 
 
-@app.route('/api/sp_auth', methods=['GET'])
+@app.route('/sp_auth', methods=['GET'])
 def sp_auth():
     if session.get("token_info",'no token') != 'no token':
         return 'auth complete'
@@ -36,7 +36,7 @@ def sp_auth():
     res = sp_token.get_sp_token()
     return res
 
-@app.route('/api/mal_auth', methods=['GET'])
+@app.route('/mal_auth', methods=['GET'])
 def mal_auth():
     if session.get("mal_token",'no token') != 'no token':
         return 'auth complete'
@@ -44,14 +44,13 @@ def mal_auth():
     res = mal_token.get_token()
     return res
 
-@app.route('/api/submission', methods=['POST'])
+@app.route('/submission', methods=['POST'])
 def submission():
     themes = getThemes()
     themes.open_token()
     add_song=addSong()
     add_song.open_token()
     form = request.json
-    background_task(form, themes, add_song)
     task = q.enqueue(background_task, form, themes, add_song)
     response = {
         "status" : "success",
@@ -60,9 +59,8 @@ def submission():
         }
     }
     return jsonify(response), 202
-    return 'success'
 
-@app.route('/api/task/<task_id>', methods=['GET'])
+@app.route('/task/<task_id>', methods=['GET'])
 def get_status(task_id):
     task = q.fetch_job(task_id)
     if task:
@@ -79,4 +77,4 @@ def get_status(task_id):
     return jsonify(response)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')

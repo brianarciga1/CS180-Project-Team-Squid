@@ -16,7 +16,7 @@ export default {
   },
   methods: {
     sp_auth() {
-      const path = 'http://proxy:80/api/sp_auth';
+      const path = '/api/sp_auth';
       const queryString = window.location.search
       if(queryString == ''){
         axios.get(path)

@@ -16,7 +16,7 @@ export default {
   },
   methods: {
     mal_auth() {
-      const path = 'http://127.0.0.1:5173/api/mal_auth';
+      const path = '/api/mal_auth';
       const queryString = window.location.search
       if(queryString == ''){
         axios.get(path)

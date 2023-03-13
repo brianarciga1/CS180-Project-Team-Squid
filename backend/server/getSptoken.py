@@ -5,7 +5,7 @@ import os
 
 os.environ["SPOTIPY_CLIENT_ID"] = "6b908b892b1c4f51aa4286c3d3c66cd0"
 os.environ["SPOTIPY_CLIENT_SECRET"] = "171f29c1ee1746828049c3feac06c06e"
-os.environ["SPOTIPY_REDIRECT_URI"] = "http://127.0.0.1:5173/auth"
+os.environ["SPOTIPY_REDIRECT_URI"] = "http://localhost:8800/auth"
 
 scope = "user-library-read playlist-modify-public"
 

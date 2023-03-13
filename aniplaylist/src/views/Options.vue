@@ -127,7 +127,7 @@ export default {
       }
       
       axios
-      .post('http://127.0.0.1:5173/api/submission', this.form)
+      .post('/api/submission', this.form)
       .then(res =>{
         taskID = res.data.task_id
         console.log(taskID)

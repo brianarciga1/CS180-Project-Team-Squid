@@ -12,9 +12,13 @@ services:
       - CHOKIDAR_USEPOLLING=true
   backend:
     build: ./backend/server
-    command: flask run 
-    expose:
-      - 5000
+    command: flask run --host=0.0.0.0
+    ports:
+      - "5000:5000"
+  redis:
+    image: redislabs/redismod
+    ports:
+      - '6379:6379'
   proxy:
     build: ./nginx
     hostname: proxy
@@ -23,3 +27,6 @@ services:
     depends_on:
       - frontend
       - backend
+  rq-worker:
+    build: ./backend/server
+    command: rq worker -u redis://redis:6379
