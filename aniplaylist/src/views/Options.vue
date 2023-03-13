@@ -80,7 +80,8 @@ export default {
       songTypeStr: [
         {label: ' Openings', value: 'op'},
         {label: ' Endings', value: 'ed'}
-      ]
+      ],
+      taskID: ''
     }
   },
   methods: {
@@ -134,11 +135,20 @@ export default {
       axios
       .post('/api/submission', this.form)
       .then(res =>{
-        taskID = res.data.task_id
-        console.log(taskID)
+        this.taskID = res.data.data.task_id
       })
       .catch(error =>{
         console.log(error)
+      })
+    },
+    loading(){
+      axios
+      .get('/task/' + this.taskID)
+      .then(res =>{
+        console.log(res)
+      })
+      .catch(error => {
+
       })
     }
   }
