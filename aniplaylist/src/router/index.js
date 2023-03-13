@@ -13,6 +13,11 @@ const router = createRouter({
       component: () => import('../views/SpotAuthPage.vue')
     },
     {
+      path: '/congrats',
+      name: 'congrats',
+      component: () => import('../views/Congrats.vue')
+    },
+    {
       path: '/options',
       name: 'options',
       component: () => import('../views/Options.vue')
