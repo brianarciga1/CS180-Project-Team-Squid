@@ -3,8 +3,8 @@ from flask import session, request, redirect
 from spotipy.oauth2 import SpotifyOAuth
 import os
 
-os.environ["SPOTIPY_CLIENT_ID"] = "9710c9b2411949cf855b1a8da06d1c11"
-os.environ["SPOTIPY_CLIENT_SECRET"] = "ba49835923ae4147aec9069a91017efd"
+os.environ["SPOTIPY_CLIENT_ID"] = "6b908b892b1c4f51aa4286c3d3c66cd0"
+os.environ["SPOTIPY_CLIENT_SECRET"] = "171f29c1ee1746828049c3feac06c06e"
 os.environ["SPOTIPY_REDIRECT_URI"] = "http://127.0.0.1:5173/auth"
 
 scope = "user-library-read playlist-modify-public"
