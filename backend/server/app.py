@@ -52,14 +52,14 @@ def submission():
     add_song.open_token()
     form = request.json
     background_task(form, themes, add_song)
-    #task = q.enqueue(background_task, form, themes, add_song)
-    #response = {
-    #    "status" : "success",
-    #    "data": {
-    #        "task_id": task.get_id()
-    #    }
-    #}
-    #return jsonify(response), 202
+    task = q.enqueue(background_task, form, themes, add_song)
+    response = {
+        "status" : "success",
+        "data": {
+            "task_id": task.get_id()
+        }
+    }
+    return jsonify(response), 202
     return 'success'
 
 @app.route('/api/task/<task_id>', methods=['GET'])

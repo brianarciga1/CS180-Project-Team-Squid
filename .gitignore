@@ -1,4 +1,5 @@
 .vscode
+backend/server/new_env
 backend/server/.flask_session
 backend/server/env
 backend/server/my_env
