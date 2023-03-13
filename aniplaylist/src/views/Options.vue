@@ -1,9 +1,10 @@
 <template>
   <div class="container">
-    <div class="loading">
-
+    <div class="loading" v-if="loading_icon">
+      <img class="loading_img" src="../assets/Infinity-1s-200px(1).svg">
+      <p class="loading_txt">Please wait a few minutes for your playlist to be created.</p>
     </div>
-    <form @submit.prevent="submitForm">
+    <form class="form" @submit.prevent="submitForm">
       <p class="font1">Title___of___Playlist:</p>
       <input type="text" class="userInput" v-model="form.playlistTitle">
       <p v-if="titleCheck" class="red-text">Please enter a valid title for playlist</p>
@@ -45,10 +46,6 @@
   </div>
 </template>
 
-<style>
-
-</style>
-
 <script>
 import axios from 'axios'
 
@@ -81,7 +78,9 @@ export default {
         {label: ' Openings', value: 'op'},
         {label: ' Endings', value: 'ed'}
       ],
-      taskID: ''
+      taskID: '',
+      playlistID: '',
+      loading_icon: false
     }
   },
   methods: {
@@ -136,19 +135,28 @@ export default {
       .post('/api/submission', this.form)
       .then(res =>{
         this.taskID = res.data.data.task_id
+        const id = setInterval(()=> this.loading(id), 2000)
       })
       .catch(error =>{
         console.log(error)
       })
     },
-    loading(){
+    loading(id){
+      this.loading_icon = true
+
       axios
-      .get('/task/' + this.taskID)
+      .get('/api/task/' + this.taskID)
       .then(res =>{
-        console.log(res)
+        var status = res.data.data.task_status
+        if(status == 'finished'){
+          this.loading_icon = false
+          this.playlistID = res.data.data.task_result
+          clearInterval(id)
+          localStorage.playlistID = this.playlistID
+        }
+        
       })
       .catch(error => {
-
       })
     }
   }
@@ -156,6 +164,27 @@ export default {
 </script>
 
 <style scoped>
+.form {
+  z-index: 1;
+  width: 50%;
+  margin: auto;
+}
+.loading_img {
+  opacity: 1;
+}
+.loading {
+  z-index: 2;
+  position: absolute;
+  height: 100vh;
+  width: 50%;
+  margin-left: 25%;
+  background-color: rgb(255, 255, 255,0.3)
+}
+.loading_txt{
+  font-size: large;
+  font-weight: 700;
+  color: black;
+}
 .center {
   display: flex;
   justify-content: right;
