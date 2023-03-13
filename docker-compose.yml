@@ -15,3 +15,11 @@ services:
     command: flask run 
     expose:
       - 5000
+  proxy:
+    build: ./nginx
+    hostname: proxy
+    ports:
+      - '8800:80'
+    depends_on:
+      - frontend
+      - backend
