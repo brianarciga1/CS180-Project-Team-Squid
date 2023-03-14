@@ -1,6 +1,14 @@
 <template>
-    <div v-html="msg"></div>
+    <div class='button' v-html="msg"></div>
 </template>
+
+<style>
+.button{
+  background-color: #1db854;
+  height: 100px;
+  width: 300px;
+}
+</style>
   
 <script>
 import axios from 'axios';

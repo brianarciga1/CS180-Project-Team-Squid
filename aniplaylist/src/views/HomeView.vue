@@ -1,8 +1,11 @@
 <!--THIS IS FOR THE HOME PAGE!!!!-->
 <template>
   <div class="Home">
+    <nav>
+    <RouterLink to="/auth">Start</RouterLink>
+    </nav>
     <strong class="font1"> HOW___TO___USE</strong>
-    <p class="font2">1.) Click authenticate</p>
+    <p class="font2">1.) Click Start</p>
     <p class="font2">2.) Login to Spotify</p>
     <p class="font2">3.) Login to My Anime List</p>
     <p class="font2">4.) Fill in the details for your new playlist</p>
@@ -24,15 +27,30 @@
 </template>
 
 <script>
+import { RouterLink } from 'vue-router';
+
 export default {
-  name: 'Home',
-  props: {
-    msg: String
-  }
+    name: "Home",
+    props: {
+        msg: String
+    },
+    components: { RouterLink }
 }
 </script>
 
 <style scoped>
+nav {
+  width: 100%;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+nav a {
+  display: inline-block;
+  padding: 0 1rem;
+  border-left: 1px solid white;
+}
 
 @font-face {
   font-family: "Naruto";

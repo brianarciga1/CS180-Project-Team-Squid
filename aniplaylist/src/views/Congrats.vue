@@ -3,6 +3,7 @@
     <div class="Home">
       <strong class="font1"> CONGRATULATIONS!</strong>
       <p class="font2">Your new Spotify playlist has been created!</p>
+      <iframe style="border-radius:12px" :src=url width="40%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
       <nav>
         <RouterLink to="/">Home</RouterLink>
     </nav>
@@ -21,8 +22,10 @@
   <script>
   export default {
     name: 'Home',
-    props: {
-      msg: String
+    data(){
+      return{
+        url: 'https://open.spotify.com/embed/playlist/' + localStorage.playlistID + '?utm_source=generator'
+      }
     }
   }
   </script>

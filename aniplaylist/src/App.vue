@@ -10,13 +10,6 @@ import HelloWorld from './components/HelloWorld.vue'
 
     <div class="wrapper">
       <HelloWorld/>
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/auth">Authenticate</RouterLink>
-        <RouterLink to="/options">Options</RouterLink>
-        <RouterLink to="/congrats">Congrats</RouterLink>
-      </nav>
     </div>
   </header>
 
@@ -34,24 +27,6 @@ header {
   margin: 0 auto 2rem;
 }
 
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-/*Changes color of text of current page*/
-nav a.router-link-exact-active {
-  color: orange;
-  border: 10px solid orange;
-}
-
-/*This changes the color of the background of the current page you are on in the menu*/
-nav a.router-link-exact-active:hover {
-  background-color: purple;
-  border: 10px solid purple;
-}
 
 /*Lets menu be side by side and changes border width and color*/
 nav a {

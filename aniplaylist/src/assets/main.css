@@ -79,3 +79,15 @@ nav a{
   display: inline-block;
   cursor: pointer;
 }
+
+/*Changes color of text of current page*/
+nav a.router-link-exact-active {
+  color: orange;
+  border: 10px solid orange;
+}
+
+/*This changes the color of the background of the current page you are on in the menu*/
+nav a.router-link-exact-active:hover {
+  background-color: purple;
+  border: 10px solid purple;
+}

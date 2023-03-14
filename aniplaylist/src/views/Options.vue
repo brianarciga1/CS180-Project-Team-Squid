@@ -153,10 +153,11 @@ export default {
           this.playlistID = res.data.data.task_result
           clearInterval(id)
           localStorage.playlistID = this.playlistID
-        }
-        
+          this.$router.push('/congrats')
+        }   
       })
       .catch(error => {
+        console.log(error)
       })
     }
   }
