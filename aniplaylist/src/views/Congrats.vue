@@ -4,8 +4,7 @@
       <strong class="font1"> CONGRATULATIONS!</strong>
       <p class="font2">Your new Spotify playlist has been created!</p>
       <iframe style="border-radius:12px" :src=url width="40%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
+      <nav><RouterLink to='/options'>Create another playlist</RouterLink>
     </nav>
       <p class="font3"> THANK___YOU___FOR___USING<br>
         <div class="center">
