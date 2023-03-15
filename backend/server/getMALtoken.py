@@ -3,8 +3,8 @@ import json
 import secrets
 from flask import session, request
 
-client_id = '88e3dbaaa3ec218d3cc804e4eaf00489'
-CLIENT_SECRET = 'ef65a95e5da025057b266f39c758d34dd6e22caf1ad349e5ae2ab3177556a02a'
+client_id = 'cb1e847f2aa5d92fa7044e7a2fa3b848'
+CLIENT_SECRET = '9e9f3e0112ca5cc3e5376f6205196ffb250d736c4e1deb9d8968057f339ad392'
 
 class getMALtoken():
     
@@ -67,6 +67,12 @@ class getMALtoken():
             authorisation_code = request.args.get("code")
             token = self.generate_new_token(authorisation_code, code_verifier)
             session['mal_token'] = token
+              
+            with open("tokens.json", "r") as jsonFile:
+                js = json.load(jsonFile)
+            js["mal_token"] = token["access_token"]
+            with open("tokens.json", "w") as jsonFile:
+                json.dump(js, jsonFile)
             return 'auth complete'
         
         code_verifier = code_challenge = self.get_new_code_verifier()
