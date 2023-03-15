@@ -1,5 +1,10 @@
 <template>
-    <div class='button' v-html="msg"></div>
+  <a :href=msg>
+    <div class='button'>
+      <img src="../assets/Spotify_Icon_RGB_White.png" class="spotify_logo">
+      <p class="prompt">Log in to Spotify</p>
+    </div>
+  </a>
 </template>
 
 <style>
@@ -7,6 +12,20 @@
   background-color: #1db854;
   height: 100px;
   width: 300px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  margin-top: 20px;
+}
+.spotify_logo{
+  height: 50px;
+  margin: auto 10px;
+}
+.prompt {
+  margin: auto 20px;
+  color: white;
+  font-size: x-large;
 }
 </style>
   

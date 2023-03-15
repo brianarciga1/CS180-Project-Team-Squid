@@ -1,4 +1,5 @@
 from flask import session, request
+from random import randint
 from bs4 import BeautifulSoup
 import time
 import requests
@@ -28,20 +29,22 @@ class getThemes():
         animeIDs = []
         path1 = 'https://api.myanimelist.net/v2/users/@me/animelist'
         status = '?status='
-        #limit = '&limit=1000'
+        limit = '&limit=1000'
         if len(form['listOptions']) < 5:
             for i in range(len(form['listOptions'])):
                 newstatus = status + form['listOptions'][i] 
                 newpath = path1 + newstatus
-                #r = requests.get(newpath + limit, headers=header)
-                r = requests.get(newpath, headers=header)
+                r = requests.get(newpath + limit, headers=header)
+                #r = requests.get(newpath, headers=header)
                 for i in json.loads(r.text)['data']:
                     animeIDs.append(i['node']['id'])
         else:
             r = requests.get(path1, headers=header)
             for i in json.loads(r.text)['data']:
                 animeIDs.append(i['node']['id'])
-        
+        header={'Content-Type': 'application/x-www-form-urlencoded',
+        'User Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'}
+        numAni = 0
         songID=[]
         animeThemes=[]
         fields = '?fields='
@@ -53,7 +56,9 @@ class getThemes():
             if form['songTypes'][i] =='ed':
                 check_ed = True
         for i in animeIDs:
-            site = requests.get('https://myanimelist.net/anime/' + str(i))
+            site = requests.get('https://myanimelist.net/anime/' + str(i), headers=header)
+            numAni +=1
+            print(numAni)
             soup = BeautifulSoup(site.text, 'lxml')
             ops_div = soup.find('div', class_ = 'theme-songs js-theme-songs opnening')
             eds_div = soup.find('div', class_ = 'theme-songs js-theme-songs ending')
@@ -75,8 +80,8 @@ class getThemes():
                     if song_artist is None:
                         continue
                     song_artist = song_artist.string
-                    animeThemes.append(songTitle + song_artist)
-            time.sleep(.5)
+                    animeThemes.append(songTitle + song_artist) 
+            time.sleep(randint(1,5))
 
         add_Song.add_to_list(songID)
             

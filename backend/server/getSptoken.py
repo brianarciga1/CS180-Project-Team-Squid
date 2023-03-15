@@ -24,4 +24,4 @@ class get_sp_token():
 
         if not auth_manager.validate_token(cache_handler.get_cached_token()):
             auth_url = auth_manager.get_authorize_url()
-            return f'<h2><a href="{auth_url}">Sign in</a></h2>'
+            return auth_url

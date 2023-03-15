@@ -51,7 +51,7 @@ def submission():
     add_song=addSong()
     add_song.open_token()
     form = request.json
-    task = q.enqueue(background_task, form, themes, add_song)
+    task = q.enqueue(background_task, args=(form, themes, add_song), job_timeout=1000)
     response = {
         "status" : "success",
         "data": {

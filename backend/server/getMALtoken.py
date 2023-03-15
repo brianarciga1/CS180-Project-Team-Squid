@@ -72,4 +72,4 @@ class getMALtoken():
         code_verifier = code_challenge = self.get_new_code_verifier()
         session['code_verifier'] = code_verifier
         url = self.print_new_authorisation_url(code_challenge)
-        return f'<h2><a href="{url}">Sign in</a></h2>'
+        return url
