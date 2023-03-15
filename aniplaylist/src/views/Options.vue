@@ -1,5 +1,8 @@
 <template>
-  <div class="form">
+  <div class="container">
+    <div class="loading">
+
+    </div>
     <form @submit.prevent="submitForm">
       <p class="font1">Title___of___Playlist:</p>
       <input type="text" class="userInput" v-model="form.playlistTitle">
@@ -41,6 +44,10 @@
     </form>
   </div>
 </template>
+
+<style>
+
+</style>
 
 <script>
 import axios from 'axios'
@@ -127,7 +134,8 @@ export default {
       axios
       .post('http://127.0.0.1:5173/api/submission', this.form)
       .then(res =>{
-        console.log(res.data)
+        taskID = res.data.task_id
+        console.log(taskID)
       })
       .catch(error =>{
         console.log(error)

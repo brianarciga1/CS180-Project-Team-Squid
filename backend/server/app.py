@@ -5,6 +5,9 @@ from getSptoken import get_sp_token
 from getMALtoken import getMALtoken
 from getThemes import getThemes
 from addSong import addSong
+from rq import Queue
+from worker import background_task
+import redis
 import json
 import os
 
@@ -13,6 +16,8 @@ DEBUG = True
 
 # instantiate the app
 app = Flask(__name__)
+r = redis.Redis()
+q = Queue(connection=r)
 app.config.from_object(__name__)
 app.config['SECRET_KEY'] = os.urandom(64)
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -43,12 +48,36 @@ def mal_auth():
 def submission():
     themes = getThemes()
     themes.open_token()
-    form = request.json
     add_song=addSong()
     add_song.open_token()
-    add_song.create_list(form['playlistTitle'], form['playlistDesc'])
-    add_song.add_Song(add_song.search(themes.get_themes(form)))
+    form = request.json
+    print(form, type(form   ))
+    background_task(form, themes, add_song)
+    #task = q.enqueue(background_task, form, themes, add_song)
+    #response = {
+    #    "status" : "success",
+    #    "data": {
+    #        "task_id": task.get_id()
+    #    }
+    #}
+    #return jsonify(response), 202
     return 'success'
+
+@app.route('/api/task/<task_id>', methods=['GET'])
+def get_status(task_id):
+    task = q.fetch_job(task_id)
+    if task:
+        response = {
+            "status": "success",
+            "data": {
+                "task_id": task.get_id(),
+                "task_status": task.get_status(),
+                "task_result": task.result,
+            },
+        }
+    else:
+        response = {"status": "error"}
+    return jsonify(response)
 
 if __name__ == '__main__':
     app.run()
