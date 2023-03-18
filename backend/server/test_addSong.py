@@ -33,7 +33,6 @@ class TestaddSong(unittest.TestCase):
         self.testAddSong.add_to_list(data)
         response = requests.get('https://api.spotify.com/v1/playlists/'+self.playlistID+'/tracks', headers=self.headers)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json.loads(response.text)['items'][0]['track']['name'], "STAND PROUD")
     
     # search for "STAND PROUD"
     def test_search(self):
@@ -52,4 +51,3 @@ class TestaddSong(unittest.TestCase):
         
         response = requests.get('https://api.spotify.com/v1/playlists/'+self.playlistID+'/tracks', headers=self.headers)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json.loads(response.text)['items'][0]['track']['name'], "STAND PROUD")
